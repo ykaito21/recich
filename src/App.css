@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Bitter|Open+Sans");
+
+body {
+  font-family: "Open Sans", sans-serif !important;
+  box-sizing: border-box;
+  margin: auto;
+  padding: 0;
+}
+
+.text-slanted {
+  font-family: "Bitter", serif;
+}
