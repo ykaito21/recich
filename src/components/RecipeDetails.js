@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { recipe } from "../tempDetails";
+import { recipe } from "../tempDetails";
 import { Link } from "react-router-dom";
 
 class RecipeDetails extends Component {
@@ -26,24 +26,25 @@ class RecipeDetails extends Component {
   // }
 
   state = {
-    recipe: {}
+    recipe: recipe,
+    isLoadingDetail: true
   };
-  // async componentDidMount() {
-  //   const url = `https://www.food2fork.com/api/get?key=e41d6f7ea0e52626f592be6d89795bcb&rId=${
-  //     this.props.id
-  //   }`;
-  //   await fetch(url)
-  //     .then(data => data.json())
-  //     .then(recipeData => {
-  //       this.setState(
-  //         (state, props) => {
-  //           return { recipe: recipeData.recipe };
-  //         },
-  //         () => {}
-  //       );
-  //     })
-  //     .catch(err => console.log(err));
-  // }
+  async componentDidMount() {
+    const url = `https://www.food2fork.com/api/get?key=e41d6f7ea0e52626f592be6d89795bcb&rId=${
+      this.props.id
+    }`;
+    await fetch(url)
+      .then(data => data.json())
+      .then(recipeData => {
+        this.setState(
+          (state, props) => {
+            return { recipe: recipeData.recipe, isLoadingDetail: false };
+          },
+          () => {}
+        );
+      })
+      .catch(err => console.log(err));
+  }
 
   render() {
     const {
@@ -55,12 +56,12 @@ class RecipeDetails extends Component {
       ingredients
     } = this.state.recipe;
     // const { handleIndex } = this.props;
-    const { isLoading } = this.props;
+    const { isLoadingDetail } = this.state;
     return (
       <div>
         <React.Fragment>
           <div className="container">
-            {isLoading ? (
+            {isLoadingDetail ? (
               <h3 className="text-ifo text-center">Loading...</h3>
             ) : (
               <div className="row">

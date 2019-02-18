@@ -40,7 +40,7 @@ class RecipeList extends Component {
                   <Recipe
                     key={recipe.recipe_id}
                     recipe={recipe}
-                    // handleDetails={handleDetails}
+                    handleDetails={handleDetails}
                   />
                 );
               })}

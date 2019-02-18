@@ -16,7 +16,7 @@ class App extends Component {
       "https://www.food2fork.com/api/search?key=e41d6f7ea0e52626f592be6d89795bcb",
     base_url:
       "https://www.food2fork.com/api/search?key=e41d6f7ea0e52626f592be6d89795bcb",
-    details_id: 35382,
+    details_id: null,
     pageIndex: 1,
     search: "",
     query: "&q=",
@@ -28,7 +28,7 @@ class App extends Component {
     await fetch(this.state.url)
       .then(data => data.json())
       .then(recipeData => {
-        console.log(recipeData.recipes);
+        // console.log(recipeData.recipes);
 
         if (recipeData.recipes.length === 0) {
           this.setState({
@@ -45,7 +45,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // this.getRecipes();
+    this.getRecipes();
   }
 
   // diplayPage = index => {
@@ -78,12 +78,12 @@ class App extends Component {
   //   });
   // };
 
-  // handleDetails = (index, id) => {
-  //   this.setState({
-  //     details_id: id,
-  //     pageIndex: index
-  //   });
-  // };
+  handleDetails = (index, id) => {
+    this.setState({
+      details_id: id,
+      pageIndex: index
+    });
+  };
 
   handleChange = e => {
     this.setState({
@@ -108,7 +108,7 @@ class App extends Component {
             render={() => (
               <RecipeList
                 recipes={this.state.recipes}
-                // handleDetails={this.handleDetails}
+                handleDetails={this.handleDetails}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
                 search={this.state.search}
@@ -123,7 +123,6 @@ class App extends Component {
               <RecipeDetails
                 id={this.state.details_id}
                 // handleIndex={this.handleIndex}
-                isLoading={this.state.isLoading}
               />
             )}
           />
