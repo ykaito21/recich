@@ -10,7 +10,8 @@ class RecipeList extends Component {
       handleChange,
       handleSubmit,
       search,
-      error
+      error,
+      isLoading
     } = this.props;
 
     return (
@@ -28,7 +29,9 @@ class RecipeList extends Component {
             </div>
           </div>
           {/* title end */}
-          {error ? (
+          {isLoading ? (
+            <h3 className="text-ifo text-center">Loading...</h3>
+          ) : error ? (
             <h1 className="text-danger text-center">{error}</h1>
           ) : (
             <div className="row">
@@ -37,7 +40,7 @@ class RecipeList extends Component {
                   <Recipe
                     key={recipe.recipe_id}
                     recipe={recipe}
-                    handleDetails={handleDetails}
+                    // handleDetails={handleDetails}
                   />
                 );
               })}

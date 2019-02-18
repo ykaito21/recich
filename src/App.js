@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { recipes } from "./tempList";
+// import { recipes } from "./tempList";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
+import { Route, Switch } from "react-router-dom";
+import Default from "./components/Default";
 
 // css
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,7 +11,7 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    recipes: recipes,
+    recipes: [],
     url:
       "https://www.food2fork.com/api/search?key=e41d6f7ea0e52626f592be6d89795bcb",
     base_url:
@@ -18,7 +20,8 @@ class App extends Component {
     pageIndex: 1,
     search: "",
     query: "&q=",
-    error: ""
+    error: "",
+    isLoading: true
   };
 
   getRecipes = async () => {
@@ -33,7 +36,8 @@ class App extends Component {
           });
         } else {
           this.setState({
-            recipes: recipeData.recipes
+            recipes: recipeData.recipes,
+            isLoading: false
           });
         }
       })
@@ -41,45 +45,45 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getRecipes();
+    // this.getRecipes();
   }
 
-  diplayPage = index => {
-    switch (index) {
-      default:
-      case 1:
-        return (
-          <RecipeList
-            recipes={this.state.recipes}
-            handleDetails={this.handleDetails}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-            search={this.state.search}
-            error={this.state.error}
-          />
-        );
-      case 0:
-        return (
-          <RecipeDetails
-            id={this.state.details_id}
-            handleIndex={this.handleIndex}
-          />
-        );
-    }
-  };
+  // diplayPage = index => {
+  //   switch (index) {
+  //     default:
+  //     case 1:
+  //       return (
+  //         <RecipeList
+  //           recipes={this.state.recipes}
+  //           handleDetails={this.handleDetails}
+  //           handleChange={this.handleChange}
+  //           handleSubmit={this.handleSubmit}
+  //           search={this.state.search}
+  //           error={this.state.error}
+  //         />
+  //       );
+  //     case 0:
+  //       return (
+  //         <RecipeDetails
+  //           id={this.state.details_id}
+  //           handleIndex={this.handleIndex}
+  //         />
+  //       );
+  //   }
+  // };
 
-  handleIndex = index => {
-    this.setState({
-      pageIndex: index
-    });
-  };
+  // handleIndex = index => {
+  //   this.setState({
+  //     pageIndex: index
+  //   });
+  // };
 
-  handleDetails = (index, id) => {
-    this.setState({
-      details_id: id,
-      pageIndex: index
-    });
-  };
+  // handleDetails = (index, id) => {
+  //   this.setState({
+  //     details_id: id,
+  //     pageIndex: index
+  //   });
+  // };
 
   handleChange = e => {
     this.setState({
@@ -96,7 +100,38 @@ class App extends Component {
   };
   render() {
     return (
-      <React.Fragment>{this.diplayPage(this.state.pageIndex)}</React.Fragment>
+      <React.Fragment>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <RecipeList
+                recipes={this.state.recipes}
+                // handleDetails={this.handleDetails}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                search={this.state.search}
+                error={this.state.error}
+                isLoading={this.state.isLoading}
+              />
+            )}
+          />
+          <Route
+            path="/detail"
+            render={() => (
+              <RecipeDetails
+                id={this.state.details_id}
+                // handleIndex={this.handleIndex}
+                isLoading={this.state.isLoading}
+              />
+            )}
+          />
+          <Route component={Default} />
+        </Switch>
+
+        {/* {this.diplayPage(this.state.pageIndex)} */}
+      </React.Fragment>
     );
   }
 }

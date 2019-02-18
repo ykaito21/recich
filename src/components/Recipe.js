@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Recipe extends Component {
   render() {
@@ -9,7 +10,7 @@ class Recipe extends Component {
       publisher,
       recipe_id
     } = this.props.recipe;
-    const { handleDetails } = this.props;
+    // const { handleDetails } = this.props;
     return (
       <React.Fragment>
         <div className="col-10 mx-auto col-md-6 col-lg-4 my-3">
@@ -27,13 +28,15 @@ class Recipe extends Component {
               </h6>
             </div>
             <div className="card-footer">
-              <button
-                type="button"
-                className="btn btn-primary text-capitalize mr-2"
-                onClick={() => handleDetails(0, recipe_id)}
-              >
-                detail
-              </button>
+              <Link to="/detail">
+                <button
+                  type="button"
+                  className="btn btn-primary text-capitalize mr-2"
+                  // onClick={() => handleDetails(0, recipe_id)}
+                >
+                  detail
+                </button>
+              </Link>
               <a
                 href={source_url}
                 className="btn btn-success text-capitalize"
