@@ -94,7 +94,7 @@ class App extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { base_url, query, search } = this.state;
-    this.setState({ url: `${base_url}${query}${search}, search:""` }, () =>
+    this.setState({ url: `${base_url}${query}${search}`, search: "" }, () =>
       this.getRecipes()
     );
   };
